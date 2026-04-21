@@ -334,7 +334,7 @@ const Planes = () => {
 
   return (
     <MarketingLayout>
-      <div className={pageBg}>
+      <div className="bg-transparent">
         {(errorMessage || successMessage) && (
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
             {errorMessage && (
