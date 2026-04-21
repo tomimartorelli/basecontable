@@ -192,7 +192,7 @@ const Navbar = () => {
               key={link.key}
               onClick={() => setContactModalOpen(true)}
               className={`px-3.5 py-2 rounded-full font-medium transition-colors text-sm
-                ${isLandingPage
+                ${isLandingPage || isFuncionalidades || isQuienesSomos || location.pathname === '/planes'
                   ? 'text-white/90 hover:text-white hover:bg-white/20'
                   : isDarkMode
                     ? 'text-gray-300 hover:text-white hover:bg-white/10'
@@ -207,7 +207,7 @@ const Navbar = () => {
               key={link.key}
               to={link.to}
               className={`px-3.5 py-2 rounded-full font-medium transition-colors text-sm
-                ${isLandingPage
+                ${isLandingPage || isFuncionalidades || isQuienesSomos || location.pathname === '/planes'
                   ? location.pathname.startsWith(link.to)
                     ? 'bg-white text-black'
                     : 'text-white/90 hover:text-white hover:bg-white/20'
@@ -232,7 +232,7 @@ const Navbar = () => {
           <Link
             to="/dashboard"
             className={`px-3.5 py-2 rounded-full font-medium transition-colors text-sm
-              ${isLandingPage
+              ${isLandingPage || isFuncionalidades || isQuienesSomos || location.pathname === '/planes'
                 ? location.pathname.startsWith('/dashboard')
                   ? 'bg-white text-black'
                   : 'text-white/90 hover:text-white hover:bg-white/20'
@@ -257,7 +257,7 @@ const Navbar = () => {
             <Link
               to="/equipo/usuarios"
               className={`px-3.5 py-2 rounded-full font-medium transition-colors text-sm
-                ${isLandingPage
+                ${isLandingPage || isFuncionalidades || isQuienesSomos || location.pathname === '/planes'
                   ? location.pathname.startsWith('/equipo')
                     ? 'bg-white text-black'
                     : 'text-white/90 hover:text-white hover:bg-white/20'
@@ -282,7 +282,7 @@ const Navbar = () => {
           <Link
             to="/admin/users"
             className={`px-3.5 py-2 rounded-full font-medium transition-colors text-sm
-              ${isLandingPage
+              ${isLandingPage || isFuncionalidades || isQuienesSomos || location.pathname === '/planes'
                 ? location.pathname.startsWith('/admin/users')
                   ? 'bg-white text-black'
                   : 'text-white/90 hover:text-white hover:bg-white/20'

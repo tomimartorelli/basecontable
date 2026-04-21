@@ -23,6 +23,10 @@ const Planes = () => {
   const textSec = modoOscuro ? 'text-gray-300' : 'text-gray-600';
   const textMuted = modoOscuro ? 'text-gray-400' : 'text-gray-500';
   const btnOut = modoOscuro ? 'border-gray-600 text-white hover:bg-gray-800' : 'border-gray-300 text-gray-800 hover:bg-gray-50';
+
+  // Colores específicos para hero (sobre Aurora)
+  const heroText = modoOscuro ? 'text-white' : 'text-black';
+  const heroTextMuted = modoOscuro ? 'text-white/80' : 'text-black/80';
   const tableHead = modoOscuro ? 'bg-gray-800 text-gray-300' : 'bg-gray-50 text-gray-500';
   const tableRowAlt = modoOscuro ? 'bg-gray-800/50' : 'bg-gray-50/70';
   const divideY = modoOscuro ? 'divide-gray-700' : 'divide-gray-100';
@@ -349,17 +353,17 @@ const Planes = () => {
           </div>
         )}
         {/* ========== SECCIÓN 1: PLANES Y PRECIOS ========== */}
-        <section ref={section1Ref} className="relative min-h-screen flex flex-col justify-center py-12 lg:py-16">
+        <section ref={section1Ref} className="relative min-h-screen flex flex-col justify-center py-12 lg:py-16 overflow-hidden">
           <div ref={section1ContentRef} className="w-full">
           {/* Header de sección */}
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
-            <p className={`text-[11px] font-semibold tracking-[0.2em] uppercase mb-3 ${modoOscuro ? 'text-[#5CA3FF]' : 'text-[#004AAD]'}`}>
+            <p className={`text-[11px] font-semibold tracking-[0.2em] uppercase mb-3 ${heroTextMuted}`}>
               PLANES Y PRECIOS
             </p>
-            <h1 className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 ${textPri}`}>
+            <h1 className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 ${heroText}`}>
               Precios simples para tener el registro en orden
             </h1>
-            <p className={`text-sm md:text-base max-w-2xl mx-auto ${textSec}`}>
+            <p className={`text-sm md:text-base max-w-2xl mx-auto ${heroTextMuted}`}>
               Empezá en minutos, sin instalaciones ni AFIP. Actualizá el plan cuando tu negocio crezca.
             </p>
 
