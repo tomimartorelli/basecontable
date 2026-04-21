@@ -8,18 +8,23 @@ const app = express();
 
 // Middlewares
 // Configurar CORS para permitir el frontend
+const normalizeUrl = function(url) {
+  return url ? url.replace(/\/$/, '') : url;
+};
+
 const allowedOrigins = [
-  process.env.FRONTEND_URL?.replace(/\/$/, ''),
+  normalizeUrl(process.env.FRONTEND_URL),
   'http://localhost:3000',
   'http://localhost:3001'
 ].filter(Boolean);
 
 const corsOptions = {
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes(origin?.replace(/\/$/, ''))) {
+    if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes(normalizeUrl(origin))) {
       callback(null, true);
     } else {
       console.log('CORS rechazado para origen:', origin);
+      console.log('Orígenes permitidos:', allowedOrigins);
       callback(new Error('Not allowed by CORS'));
     }
   },
