@@ -7,7 +7,14 @@ const config = require('./config');
 const app = express();
 
 // Middlewares
-app.use(cors());
+// Configurar CORS para permitir el frontend
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || '*',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+};
+app.use(cors(corsOptions));
 app.use(express.json({ limit: '50mb' })); // Aumentar límite para logos base64 grandes
 
 // Conexión a MongoDB
