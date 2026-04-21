@@ -228,7 +228,7 @@ const QuienesSomos = () => {
         </section>
 
         {/* ========== SECCIÓN 2: MISIÓN + DIFERENCIADORES ========== */}
-        <section ref={section2Ref} className={`relative z-20 min-h-screen flex flex-col justify-center py-8 lg:py-12 ${sectionBg}`}>
+        <section ref={section2Ref} className={`relative z-20 min-h-screen flex flex-col justify-center py-8 lg:py-12 overflow-hidden ${sectionBg}`}>
           <div className="w-full px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -275,7 +275,7 @@ const QuienesSomos = () => {
         </section>
 
         {/* ========== SECCIÓN 3: VALORES + CTA ========== */}
-        <section ref={section3Ref} className={`relative z-20 min-h-screen flex flex-col justify-center py-8 lg:py-12 ${sectionBg}`}>
+        <section ref={section3Ref} className={`relative z-20 min-h-screen flex flex-col justify-center py-8 lg:py-12 overflow-hidden ${sectionBg}`}>
           <div className="w-full px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
               <div className="text-center mb-8 lg:mb-10">

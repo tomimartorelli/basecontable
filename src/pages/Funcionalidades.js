@@ -297,7 +297,7 @@ const Funcionalidades = () => {
         </section>
 
         {/* ========== SECCIÓN 2: FUNCIONALIDADES PRINCIPALES ========== */}
-        <section ref={section2Ref} className={`relative z-20 min-h-screen flex flex-col justify-center py-8 lg:py-12 ${sectionBg}`}>
+        <section ref={section2Ref} className={`relative z-20 min-h-screen flex flex-col justify-center py-8 lg:py-12 overflow-hidden ${sectionBg}`}>
           <div className="w-full px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
               <div className="text-center mb-8 lg:mb-10">
@@ -338,7 +338,7 @@ const Funcionalidades = () => {
         </section>
 
         {/* ========== SECCIÓN 3: BENEFICIOS + CARACTERÍSTICAS TÉCNICAS ========== */}
-        <section ref={section3Ref} className={`relative z-20 min-h-screen flex flex-col justify-center py-8 lg:py-12 ${sectionBg}`}>
+        <section ref={section3Ref} className={`relative z-20 min-h-screen flex flex-col justify-center py-8 lg:py-12 overflow-hidden ${sectionBg}`}>
           <div className="w-full px-4 sm:px-6 lg:px-8">
             {/* Beneficios */}
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-12">
@@ -394,7 +394,7 @@ const Funcionalidades = () => {
         </section>
 
         {/* ========== SECCIÓN 4: CTA ========== */}
-        <section ref={section4Ref} className={`relative z-20 min-h-screen flex flex-col justify-center py-12 lg:py-16 ${ctaBg}`}>
+        <section ref={section4Ref} className={`relative z-20 min-h-screen flex flex-col justify-center py-12 lg:py-16 overflow-hidden ${ctaBg}`}>
           <div className="w-full px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">

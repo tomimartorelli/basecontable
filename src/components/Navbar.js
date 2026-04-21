@@ -387,13 +387,9 @@ const Navbar = () => {
         <button
           onClick={() => setModoOscuro(!modoOscuro)}
           className={`p-3 rounded-xl transition-all duration-300 ${
-            isLandingPage || isFuncionalidades || isQuienesSomos
-              ? modoOscuro
-                ? 'text-white hover:bg-white/20'
-                : 'text-black hover:bg-black/20'
-              : isDarkMode
-                ? 'text-white hover:bg-white/10'
-                : 'text-gray-700 hover:bg-gray-100'
+            isDarkMode
+              ? 'text-white hover:bg-white/10'
+              : 'text-gray-700 hover:bg-gray-100'
           }`}
           aria-label={modoOscuro ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
         >
@@ -402,13 +398,9 @@ const Navbar = () => {
         
         <button
           className={`p-3 rounded-xl transition-all duration-300 ${
-            isLandingPage || isFuncionalidades || isQuienesSomos
-              ? modoOscuro
-                ? 'text-white hover:bg-white/20'
-                : 'text-black hover:bg-black/20'
-              : isDarkMode
-                ? 'text-white hover:bg-white/10'
-                : 'text-gray-700 hover:bg-gray-100'
+            isDarkMode
+              ? 'text-white hover:bg-white/10'
+              : 'text-gray-700 hover:bg-gray-100'
           }`}
           onClick={() => setMobileOpen(true)}
           aria-label="Abrir menú"
