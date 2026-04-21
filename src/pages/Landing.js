@@ -201,7 +201,6 @@ const Landing = () => {
       const container = document.getElementById('main-scroll');
       if (!container) return;
 
-      const scrollTop = container.scrollTop;
       const containerHeight = container.clientHeight;
       
       sections.forEach((ref, index) => {

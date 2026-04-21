@@ -132,9 +132,6 @@ const Navbar = () => {
     };
   }, [isFuncionalidades, isQuienesSomos, location.pathname]);
 
-  // Detectar si es mobile
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
-
   // Estilos condicionales para landing page, funcionalidades, quienes-somos y planes - transparente solo en el hero
   // En mobile también transparente en el hero, sólida al scrollear
   const landingSection = window.__landingActiveSection ?? 0;
