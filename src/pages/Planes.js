@@ -22,7 +22,6 @@ const Planes = () => {
   const textPri = modoOscuro ? 'text-white' : 'text-gray-900';
   const textSec = modoOscuro ? 'text-gray-300' : 'text-gray-600';
   const textMuted = modoOscuro ? 'text-gray-400' : 'text-gray-500';
-  const pageBg = modoOscuro ? 'bg-black' : 'bg-[#f5f5f7]';
   const btnOut = modoOscuro ? 'border-gray-600 text-white hover:bg-gray-800' : 'border-gray-300 text-gray-800 hover:bg-gray-50';
   const tableHead = modoOscuro ? 'bg-gray-800 text-gray-300' : 'bg-gray-50 text-gray-500';
   const tableRowAlt = modoOscuro ? 'bg-gray-800/50' : 'bg-gray-50/70';
