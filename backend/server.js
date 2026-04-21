@@ -12,7 +12,7 @@ app.use(cors({
   origin: '*',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'X-Prevent-Global-Data', 'X-Force-User-Filter', 'X-User-Specific-Only']
 }));
 console.log('CORS configurado: permitiendo todos los orígenes');
 app.use(express.json({ limit: '50mb' })); // Aumentar límite para logos base64 grandes
