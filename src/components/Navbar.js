@@ -135,12 +135,13 @@ const Navbar = () => {
   // Detectar si es mobile
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
 
-  // Estilos condicionales para landing page, funcionalidades y quienes-somos hero - transparente solo allí
+  // Estilos condicionales para landing page, funcionalidades, quienes-somos y planes - transparente solo allí
   // En mobile NO usar transparencia al scrollear para mejor contraste
   const isTransparent = !isMobile && (
     isLandingPage || 
-    (isFuncionalidades && isFuncionalidadesHero) || 
-    (isQuienesSomos && isQuienesSomosHero)
+    isFuncionalidades || 
+    isQuienesSomos ||
+    location.pathname === '/planes'
   );
   
   // En el hero de Funcionalidades o QuienesSomos, forzar modo oscuro para buen contraste
