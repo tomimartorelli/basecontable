@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect, useRef, useLayoutEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
-import { gsap } from 'gsap';
 import Navbar from '../components/Navbar';
 import MenuMobile from '../components/MenuMobile';
 import Footer from '../components/Footer';
@@ -55,8 +54,8 @@ const MarketingLayout = ({ children, showNavbar = true }) => {
   const dotInactive = modoOscuro ? 'bg-white/30' : 'bg-gray-400';
   
   const showSilk = false; // Desactivado - ahora usamos Aurora para todas
-  const showAurora = isLandingPage || isFuncionalidades || isQuienesSomos;
-  const wrapperClass = (isLandingPage || isFuncionalidades || isQuienesSomos)
+  const showAurora = isLandingPage || isFuncionalidades || isQuienesSomos || location.pathname === '/planes';
+  const wrapperClass = (isLandingPage || isFuncionalidades || isQuienesSomos || location.pathname === '/planes')
     ? 'bg-transparent text-white'
     : modoOscuro
       ? 'bg-black text-white'
