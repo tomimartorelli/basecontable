@@ -194,11 +194,43 @@ const Landing = () => {
       }
     };
 
+    // Detectar sección activa basado en scroll nativo (para mobile y scroll no controlado)
+    const handleScroll = () => {
+      if (isScrollingRef.current) return;
+      
+      const container = document.getElementById('main-scroll');
+      if (!container) return;
+
+      const scrollTop = container.scrollTop;
+      const containerHeight = container.clientHeight;
+      
+      sections.forEach((ref, index) => {
+        if (!ref.current) return;
+        const rect = ref.current.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        const elementTop = rect.top - containerRect.top;
+        
+        // Si el elemento está en el viewport y es el más visible
+        if (elementTop >= -containerHeight / 2 && elementTop < containerHeight / 2) {
+          if (currentSectionRef.current !== index) {
+            currentSectionRef.current = index;
+            setActiveSection(index);
+            window.__landingActiveSection = index;
+          }
+        }
+      });
+    };
+
     const container = document.getElementById('main-scroll');
     
-    // Solo aplicar scroll controlado en desktop (no mobile)
+    // Scroll controlado en desktop
     if (container && !isMobile) {
       container.addEventListener('wheel', handleWheel, { passive: false });
+    }
+    
+    // Scroll nativo para detectar sección activa (mobile y scroll no controlado)
+    if (container) {
+      container.addEventListener('scroll', handleScroll, { passive: true });
     }
 
     return () => {
