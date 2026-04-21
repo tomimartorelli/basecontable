@@ -62,29 +62,12 @@ const MarketingLayout = ({ children, showNavbar = true }) => {
       ? 'bg-black text-white'
       : 'bg-white text-gray-900';
 
-  // Animar navbar al cambiar showNavbar (solo desktop)
-  useEffect(() => {
-    if (!navbarRef.current) return;
-    
-    // En mobile siempre mostrar, en desktop controlar
-    const isMobile = window.innerWidth < 1024;
-    
-    if (isMobile || showNavbar) {
-      gsap.to(navbarRef.current, {
-        y: 0,
-        opacity: 1,
-        duration: 0.5,
-        ease: 'power3.out'
-      });
-    } else {
-      gsap.to(navbarRef.current, {
-        y: -100,
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power3.in'
-      });
-    }
-  }, [showNavbar]);
+  // Navbar sin animación - mostrar/ocultar inmediatamente
+  const navbarStyle = {
+    transform: showNavbar ? 'translateY(0)' : 'translateY(-100%)',
+    opacity: showNavbar ? 1 : 0,
+    transition: 'none'
+  };
 
   // Reiniciar scroll al cambiar de ruta - usar useLayoutEffect para ejecutar ANTES de la pintura
   useLayoutEffect(() => {
@@ -123,7 +106,7 @@ const MarketingLayout = ({ children, showNavbar = true }) => {
       )}
       
       <div className="relative z-10">
-        <div ref={navbarRef} className="fixed top-0 left-0 right-0 z-40">
+        <div ref={navbarRef} className="fixed top-0 left-0 right-0 z-40" style={navbarStyle}>
           <Navbar />
         </div>
         <MenuMobile
