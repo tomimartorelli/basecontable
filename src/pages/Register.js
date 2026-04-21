@@ -231,7 +231,7 @@ const Register = () => {
           </div>
           <input
             type="text"
-            className={`w-full pl-9 pr-3 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-1 ${inputClass}`}
+            className={`w-full pl-9 pr-3 py-2.5 border rounded-lg text-base focus:outline-none focus:ring-1 ${inputClass}`}
             value={name}
             onChange={e => setName(e.target.value)}
             required
@@ -252,7 +252,7 @@ const Register = () => {
           </div>
           <input
             type="email"
-            className={`w-full pl-9 pr-3 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-1 ${inputClass}`}
+            className={`w-full pl-9 pr-3 py-2.5 border rounded-lg text-base focus:outline-none focus:ring-1 ${inputClass}`}
             value={email}
             onChange={e => setEmail(e.target.value)}
             required
@@ -272,7 +272,7 @@ const Register = () => {
           </div>
           <input
             type={showPassword ? "text" : "password"}
-            className={`w-full pl-9 pr-9 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-1 ${inputClass}`}
+            className={`w-full pl-9 pr-9 py-2.5 border rounded-lg text-base focus:outline-none focus:ring-1 ${inputClass}`}
             value={password}
             onChange={e => setPassword(e.target.value)}
             required
@@ -301,7 +301,7 @@ const Register = () => {
           </div>
           <input
             type={showRepeatPassword ? "text" : "password"}
-            className={`w-full pl-9 pr-9 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-1 ${inputClass}`}
+            className={`w-full pl-9 pr-9 py-2.5 border rounded-lg text-base focus:outline-none focus:ring-1 ${inputClass}`}
             value={repeatPassword}
             onChange={e => setRepeatPassword(e.target.value)}
             required
@@ -399,7 +399,7 @@ const Register = () => {
               </label>
               <input
                 type="text"
-                className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 ${inputClass}`}
+                className={`w-full px-3 py-2 border rounded-lg text-base focus:outline-none focus:ring-1 ${inputClass}`}
                 value={companyName}
                 onChange={e => setCompanyName(e.target.value)}
                 placeholder="Nombre comercial"
@@ -413,7 +413,7 @@ const Register = () => {
               </label>
               <input
                 type="text"
-                className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 ${inputClass}`}
+                className={`w-full px-3 py-2 border rounded-lg text-base focus:outline-none focus:ring-1 ${inputClass}`}
                 value={legalName}
                 onChange={e => setLegalName(e.target.value)}
                 placeholder="Razón social legal"
@@ -427,7 +427,7 @@ const Register = () => {
               </label>
               <input
                 type="text"
-                className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 ${inputClass}`}
+                className={`w-full px-3 py-2 border rounded-lg text-base focus:outline-none focus:ring-1 ${inputClass}`}
                 value={cuit}
                 onChange={e => setCuit(e.target.value)}
                 placeholder="XX-XXXXXXXX-X"
@@ -441,7 +441,7 @@ const Register = () => {
               </label>
               <input
                 type="tel"
-                className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 ${inputClass}`}
+                className={`w-full px-3 py-2 border rounded-lg text-base focus:outline-none focus:ring-1 ${inputClass}`}
                 value={phone}
                 onChange={e => setPhone(e.target.value)}
                 placeholder="+54 11 XXXX-XXXX"
@@ -454,7 +454,7 @@ const Register = () => {
               </label>
               <input
                 type="text"
-                className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 ${inputClass}`}
+                className={`w-full px-3 py-2 border rounded-lg text-base focus:outline-none focus:ring-1 ${inputClass}`}
                 value={address}
                 onChange={e => setAddress(e.target.value)}
                 placeholder="Calle y número"
@@ -467,7 +467,7 @@ const Register = () => {
               </label>
               <input
                 type="text"
-                className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 ${inputClass}`}
+                className={`w-full px-3 py-2 border rounded-lg text-base focus:outline-none focus:ring-1 ${inputClass}`}
                 value={city}
                 onChange={e => setCity(e.target.value)}
                 placeholder="Ciudad"
@@ -480,7 +480,7 @@ const Register = () => {
               </label>
               <input
                 type="text"
-                className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 ${inputClass}`}
+                className={`w-full px-3 py-2 border rounded-lg text-base focus:outline-none focus:ring-1 ${inputClass}`}
                 value={state}
                 onChange={e => setState(e.target.value)}
                 placeholder="Provincia"
@@ -493,7 +493,7 @@ const Register = () => {
               </label>
               <input
                 type="text"
-                className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-1 ${inputClass}`}
+                className={`w-full px-3 py-2 border rounded-lg text-base focus:outline-none focus:ring-1 ${inputClass}`}
                 value={postalCode}
                 onChange={e => setPostalCode(e.target.value)}
                 placeholder="CP"

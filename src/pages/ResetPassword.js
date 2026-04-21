@@ -144,7 +144,7 @@ const ResetPassword = () => {
                 </div>
                 <input
                   type={showPassword ? 'text' : 'password'}
-                  className={`w-full pl-9 pr-9 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-1 ${inputClass}`}
+                  className={`w-full pl-9 pr-9 py-2.5 border rounded-lg text-base focus:outline-none focus:ring-1 ${inputClass}`}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -178,7 +178,7 @@ const ResetPassword = () => {
                 </div>
                 <input
                   type={showRepeatPassword ? 'text' : 'password'}
-                  className={`w-full pl-9 pr-9 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-1 ${inputClass}`}
+                  className={`w-full pl-9 pr-9 py-2.5 border rounded-lg text-base focus:outline-none focus:ring-1 ${inputClass}`}
                   value={repeatPassword}
                   onChange={(e) => setRepeatPassword(e.target.value)}
                   required
