@@ -148,6 +148,10 @@ const Funcionalidades = () => {
   const sectionBg = modoOscuro ? 'bg-black' : 'bg-white';
   const ctaBg = modoOscuro ? 'bg-[#002b5c]' : 'bg-[#004aad]';
 
+  // Colores específicos para hero (sobre Aurora)
+  const heroText = modoOscuro ? 'text-white' : 'text-black';
+  const heroTextMuted = modoOscuro ? 'text-white/80' : 'text-black/80';
+
   const features = [
     {
       icon: <FiFileText className="w-8 h-8" />,
@@ -241,22 +245,22 @@ const Funcionalidades = () => {
           <div className="w-full relative">
             {/* Header de sección */}
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
-              <p className="text-[11px] font-semibold tracking-[0.2em] uppercase mb-3 text-white/80">
+              <p className={`text-[11px] font-semibold tracking-[0.2em] uppercase mb-3 ${heroTextMuted}`}>
                 PLATAFORMA DE ADMINISTRACIÓN
               </p>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
+              <h1 className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 ${heroText}`}>
                 Todo para tener el registro en orden, sin tocar AFIP
               </h1>
-              <p className="text-sm md:text-base max-w-2xl mx-auto text-white/90">
+              <p className={`text-sm md:text-base max-w-2xl mx-auto ${heroTextMuted}`}>
                 Centralizá clientes, registro de ventas y control de cobranzas en un solo lugar. Sin complejidad fiscal.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-6">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-white text-sm backdrop-blur">
+                <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur text-sm ${modoOscuro ? 'bg-white/10 text-white' : 'bg-black/10 text-black'}`}>
                   <FiTarget className="w-4 h-4" />
                   <span>Registro de ventas y movimientos</span>
                 </div>
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-white text-sm backdrop-blur">
+                <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur text-sm ${modoOscuro ? 'bg-white/10 text-white' : 'bg-black/10 text-black'}`}>
                   <FiZap className="w-4 h-4" />
                   <span>Control de cobranzas</span>
                 </div>
@@ -265,23 +269,23 @@ const Funcionalidades = () => {
 
             {/* Cards de resumen */}
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-black/20 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+              <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 backdrop-blur-sm rounded-2xl p-6 border ${modoOscuro ? 'bg-black/20 border-white/10' : 'bg-white/20 border-black/10'}`}>
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
-                    <FiShield className="w-6 h-6 text-white" />
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${modoOscuro ? 'bg-white/10' : 'bg-black/10'}`}>
+                    <FiShield className={`w-6 h-6 ${heroText}`} />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold mb-1 text-white">Cobranzas al día</h3>
-                    <p className="text-sm text-white/80">Control de lo que te deben y lo que ya cobraste</p>
+                    <h3 className={`text-lg font-semibold mb-1 ${heroText}`}>Cobranzas al día</h3>
+                    <p className={`text-sm ${heroTextMuted}`}>Control de lo que te deben y lo que ya cobraste</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
-                    <FiBarChart className="w-6 h-6 text-white" />
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${modoOscuro ? 'bg-white/10' : 'bg-black/10'}`}>
+                    <FiBarChart className={`w-6 h-6 ${heroText}`} />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold mb-1 text-white">Visión mensual</h3>
-                    <p className="text-sm text-white/80">Movimientos del mes y salud de cobro</p>
+                    <h3 className={`text-lg font-semibold mb-1 ${heroText}`}>Visión mensual</h3>
+                    <p className={`text-sm ${heroTextMuted}`}>Movimientos del mes y salud de cobro</p>
                   </div>
                 </div>
               </div>

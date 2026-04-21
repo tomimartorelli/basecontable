@@ -22,6 +22,10 @@ const QuienesSomos = () => {
   const textSec = modoOscuro ? 'text-gray-300' : 'text-gray-600';
   const sectionBg = modoOscuro ? 'bg-black' : 'bg-white';
 
+  // Colores específicos para hero (sobre Aurora)
+  const heroText = modoOscuro ? 'text-white' : 'text-black';
+  const heroTextMuted = modoOscuro ? 'text-white/80' : 'text-black/80';
+
   // Refs para secciones
   const section1Ref = useRef(null);
   const section2Ref = useRef(null);
@@ -198,24 +202,24 @@ const QuienesSomos = () => {
           <div className="w-full relative">
             {/* Header de sección */}
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
-              <p className="text-[11px] font-semibold tracking-[0.2em] uppercase mb-3 text-white/80">
+              <p className={`text-[11px] font-semibold tracking-[0.2em] uppercase mb-3 ${heroTextMuted}`}>
                 CONOCÉ CONTASUITE
               </p>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
+              <h1 className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 ${heroText}`}>
                 Simplificamos la gestión de tu negocio
               </h1>
-              <p className="text-base md:text-lg text-white/80 max-w-3xl mx-auto">
+              <p className={`text-base md:text-lg max-w-3xl mx-auto ${heroTextMuted}`}>
                 Nacimos con una misión clara: liberar a los emprendedores de la burocracia para que puedan enfocarse en lo que realmente importa.
               </p>
             </div>
 
             {/* Stats */}
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-black/20 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+              <div className={`grid grid-cols-2 md:grid-cols-4 gap-4 backdrop-blur-sm rounded-2xl p-6 border ${modoOscuro ? 'bg-black/20 border-white/10' : 'bg-white/20 border-black/10'}`}>
                 {stats.map((stat, index) => (
                   <div key={index} className="text-center">
-                    <div className="text-2xl md:text-3xl font-bold text-white mb-1">{stat.number}</div>
-                    <div className="text-xs text-white/70">{stat.label}</div>
+                    <div className={`text-2xl md:text-3xl font-bold mb-1 ${heroText}`}>{stat.number}</div>
+                    <div className={`text-xs ${heroTextMuted}`}>{stat.label}</div>
                   </div>
                 ))}
               </div>

@@ -54,8 +54,9 @@ const MarketingLayout = ({ children, showNavbar = true }) => {
   const dotActive = modoOscuro ? 'bg-white' : 'bg-gray-900';
   const dotInactive = modoOscuro ? 'bg-white/30' : 'bg-gray-400';
   
-  const showSilk = isFuncionalidades || isQuienesSomos;
-  const wrapperClass = isLandingPage
+  const showSilk = false; // Desactivado - ahora usamos Aurora para todas
+  const showAurora = isLandingPage || isFuncionalidades || isQuienesSomos;
+  const wrapperClass = (isLandingPage || isFuncionalidades || isQuienesSomos)
     ? 'bg-transparent text-white'
     : modoOscuro
       ? 'bg-black text-white'
@@ -96,8 +97,8 @@ const MarketingLayout = ({ children, showNavbar = true }) => {
 
   return (
     <div className={`relative min-h-screen overflow-hidden ${wrapperClass}`}>
-      {/* Aurora Background - solo en landing page */}
-      {isLandingPage && (
+      {/* Aurora Background - en landing, funcionalidades y quienes-somos */}
+      {showAurora && (
         <div className="fixed inset-0 z-0">
           <Aurora
             colorStops={modoOscuro ? ["#948df7","#0617fe","#9eaeff"] : ["#E8E4FF","#C4D4FF","#A8C6FF"]}
