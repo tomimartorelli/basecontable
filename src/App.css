@@ -1,0 +1,219 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Estilos personalizados para el formulario de registro */
+.register-step-indicator {
+  position: relative;
+}
+
+.register-step-indicator .step {
+  transition: all 0.3s ease;
+}
+
+.register-step-indicator .step.active {
+  transform: scale(1.1);
+}
+
+.register-step-indicator .step.completed {
+  animation: stepCompleted 0.5s ease-in-out;
+}
+
+@keyframes stepCompleted {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.register-form-step {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.user-type-selector {
+  transition: all 0.3s ease;
+}
+
+.user-type-selector:hover {
+  transform: translateY(-2px);
+}
+
+.user-type-selector.selected {
+  box-shadow: 0 10px 25px rgba(147, 51, 234, 0.2);
+}
+
+.plan-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.plan-card:hover {
+  transform: translateY(-4px);
+}
+
+.plan-card.selected {
+  animation: planSelected 0.3s ease-out;
+}
+
+@keyframes planSelected {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1.05); }
+}
+
+.form-input-group {
+  position: relative;
+}
+
+.form-input-group input:focus {
+  transform: translateY(-1px);
+}
+
+.form-input-group .input-icon {
+  transition: all 0.3s ease;
+}
+
+.form-input-group:focus-within .input-icon {
+  transform: scale(1.1);
+}
+
+/* Estilos para campos de empresa */
+.company-fields {
+  background: #FFFFFF;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.company-fields:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Botones de navegación */
+.nav-button {
+  transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+  transform: translateY(-1px);
+}
+
+.nav-button:active {
+  transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .register-container {
+    padding: 1rem;
+  }
+  
+  .plan-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .user-type-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Animaciones de carga */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Efectos de hover para iconos */
+.feature-icon {
+  transition: all 0.3s ease;
+}
+
+.feature-icon:hover {
+  transform: scale(1.2);
+  color: #8b5cf6;
+}
+
+/* Estilos para mensajes de validación */
+.validation-message {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Estilos para el modo oscuro */
+.dark .register-container {
+  background: #0f172a;
+}
+
+.dark .company-fields {
+  background: #1e293b;
+  border-color: #475569;
+}
+
+.dark .plan-card {
+  background: #1e293b;
+  border-color: #475569;
+}
+
+.dark .plan-card:hover {
+  border-color: #8b5cf6;
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.2);
+}
