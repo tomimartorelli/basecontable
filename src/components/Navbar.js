@@ -135,13 +135,18 @@ const Navbar = () => {
   // Detectar si es mobile
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
 
-  // Estilos condicionales para landing page, funcionalidades, quienes-somos y planes - transparente solo allí
-  // En mobile NO usar transparencia al scrollear para mejor contraste
-  const isTransparent = !isMobile && (
-    isLandingPage || 
-    isFuncionalidades || 
-    isQuienesSomos ||
-    location.pathname === '/planes'
+  // Estilos condicionales para landing page, funcionalidades, quienes-somos y planes - transparente solo en el hero
+  // En mobile también transparente en el hero, sólida al scrollear
+  const landingSection = window.__landingActiveSection ?? 0;
+  const funcionalidadesSection = window.__funcionalidadesActiveSection ?? 0;
+  const quienesSomosSection = window.__quienesSomosActiveSection ?? 0;
+  const planesSection = window.__planesActiveSection ?? 0;
+
+  const isTransparent = (
+    (isLandingPage && landingSection === 0) ||
+    (isFuncionalidades && funcionalidadesSection === 0) ||
+    (isQuienesSomos && quienesSomosSection === 0) ||
+    (location.pathname === '/planes' && planesSection === 0)
   );
   
   // En el hero de Funcionalidades o QuienesSomos, forzar modo oscuro para buen contraste
@@ -193,7 +198,9 @@ const Navbar = () => {
               onClick={() => setContactModalOpen(true)}
               className={`px-3.5 py-2 rounded-full font-medium transition-colors text-sm
                 ${isLandingPage || isFuncionalidades || isQuienesSomos || location.pathname === '/planes'
-                  ? 'text-white/90 hover:text-white hover:bg-white/20'
+                  ? modoOscuro
+                    ? 'text-white/90 hover:text-white hover:bg-white/20'
+                    : 'text-black/90 hover:text-black hover:bg-black/20'
                   : isDarkMode
                     ? 'text-gray-300 hover:text-white hover:bg-white/10'
                     : 'text-gray-700 hover:text-black hover:bg-gray-100'
@@ -210,7 +217,9 @@ const Navbar = () => {
                 ${isLandingPage || isFuncionalidades || isQuienesSomos || location.pathname === '/planes'
                   ? location.pathname.startsWith(link.to)
                     ? 'bg-white text-black'
-                    : 'text-white/90 hover:text-white hover:bg-white/20'
+                    : modoOscuro
+                      ? 'text-white/90 hover:text-white hover:bg-white/20'
+                      : 'text-black/90 hover:text-black hover:bg-black/20'
                   : location.pathname.startsWith(link.to)
                     ? (isDarkMode
                       ? 'bg-white text-black'
@@ -260,7 +269,9 @@ const Navbar = () => {
                 ${isLandingPage || isFuncionalidades || isQuienesSomos || location.pathname === '/planes'
                   ? location.pathname.startsWith('/equipo')
                     ? 'bg-white text-black'
-                    : 'text-white/90 hover:text-white hover:bg-white/20'
+                    : modoOscuro
+                      ? 'text-white/90 hover:text-white hover:bg-white/20'
+                      : 'text-black/90 hover:text-black hover:bg-black/20'
                   : location.pathname.startsWith('/equipo')
                     ? (isDarkMode
                       ? 'bg-white text-black'
