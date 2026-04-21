@@ -102,10 +102,36 @@ const Funcionalidades = () => {
       }
     };
 
+    const handleScroll = () => {
+      if (isScrollingRef.current) return;
+      
+      if (!container) return;
+
+      const containerHeight = container.clientHeight;
+      
+      sections.forEach((ref, index) => {
+        if (!ref.current) return;
+        const rect = ref.current.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        const elementTop = rect.top - containerRect.top;
+        
+        // Si el elemento está en el viewport y es el más visible
+        if (elementTop >= -containerHeight / 2 && elementTop < containerHeight / 2) {
+          if (activeSectionRef.current !== index) {
+            activeSectionRef.current = index;
+            setActiveSection(index);
+            window.__funcionalidadesActiveSection = index;
+          }
+        }
+      });
+    };
+
     container.addEventListener('wheel', handleWheel, { passive: false });
+    container.addEventListener('scroll', handleScroll, { passive: true });
     
     return () => {
       container.removeEventListener('wheel', handleWheel);
+      container.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
