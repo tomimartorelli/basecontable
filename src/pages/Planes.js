@@ -199,38 +199,7 @@ const Planes = () => {
     };
   }, []);
 
-  // Animar contenido al entrar/salir de secciones
-  useEffect(() => {
-    const contentRefs = [section1ContentRef, section2ContentRef];
-    
-    // Detectar mobile
-    const isMobile = window.innerWidth < 768;
-
-    contentRefs.forEach((ref, index) => {
-      if (!ref.current) return;
-
-      if (index === activeSection) {
-        // Sección activa: entrar con animación (solo sección 1, índice 0)
-        if (index === 0) {
-          gsap.fromTo(ref.current,
-            { opacity: 0, y: 60, scale: 0.95 },
-            { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power3.out', delay: 0.2 }
-          );
-        } else {
-          // Sección 2: sin animación, solo mostrar
-          gsap.set(ref.current, { opacity: 1, y: 0, scale: 1 });
-        }
-      } else {
-        // En mobile, no ocultar contenido de secciones inactivas
-        // En desktop, animar salida
-        if (!isMobile) {
-          gsap.to(ref.current,
-            { opacity: 0, y: -40, scale: 0.98, duration: 0.5, ease: 'power2.in' }
-          );
-        }
-      }
-    });
-  }, [activeSection]);
+  // Sin animaciones de contenido al cambiar de sección (eliminadas para consistencia)
 
   const handleSubscribe = (plan) => {
     setErrorMessage('');
