@@ -132,10 +132,16 @@ const Navbar = () => {
     };
   }, [isFuncionalidades, isQuienesSomos, location.pathname]);
 
+  // Detectar si es mobile
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+
   // Estilos condicionales para landing page, funcionalidades y quienes-somos hero - transparente solo allí
-  const isTransparent = isLandingPage || 
+  // En mobile NO usar transparencia al scrollear para mejor contraste
+  const isTransparent = !isMobile && (
+    isLandingPage || 
     (isFuncionalidades && isFuncionalidadesHero) || 
-    (isQuienesSomos && isQuienesSomosHero);
+    (isQuienesSomos && isQuienesSomosHero)
+  );
   
   // En el hero de Funcionalidades o QuienesSomos, forzar modo oscuro para buen contraste
   const forceDarkMode = (isFuncionalidades && isFuncionalidadesHero) || 
@@ -381,11 +387,13 @@ const Navbar = () => {
         <button
           onClick={() => setModoOscuro(!modoOscuro)}
           className={`p-3 rounded-xl transition-all duration-300 ${
-            isLandingPage
-              ? 'text-white hover:bg-white/20'
+            isLandingPage || isFuncionalidades || isQuienesSomos
+              ? modoOscuro
+                ? 'text-white hover:bg-white/20'
+                : 'text-black hover:bg-black/20'
               : isDarkMode
                 ? 'text-white hover:bg-white/10'
-                : 'text-gray-600 hover:bg-gray-100'
+                : 'text-gray-700 hover:bg-gray-100'
           }`}
           aria-label={modoOscuro ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
         >
@@ -394,11 +402,13 @@ const Navbar = () => {
         
         <button
           className={`p-3 rounded-xl transition-all duration-300 ${
-            isLandingPage
-              ? 'text-white hover:bg-white/20'
+            isLandingPage || isFuncionalidades || isQuienesSomos
+              ? modoOscuro
+                ? 'text-white hover:bg-white/20'
+                : 'text-black hover:bg-black/20'
               : isDarkMode
                 ? 'text-white hover:bg-white/10'
-                : 'text-gray-600 hover:bg-gray-100'
+                : 'text-gray-700 hover:bg-gray-100'
           }`}
           onClick={() => setMobileOpen(true)}
           aria-label="Abrir menú"
