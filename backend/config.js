@@ -2,7 +2,7 @@
 module.exports = {
   // Configuración de MongoDB
   mongodb: {
-    uri: process.env.MONGO_URI || 'mongodb://localhost:27017/basecontable',
+    uri: process.env.MONGODB_URI || 'mongodb://localhost:27017/basecontable',
     options: {
       // Opciones modernas de MongoDB (las anteriores están deprecadas)
     }
