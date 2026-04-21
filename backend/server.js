@@ -7,32 +7,14 @@ const config = require('./config');
 const app = express();
 
 // Middlewares
-// Configurar CORS para permitir el frontend
-const normalizeUrl = function(url) {
-  return url ? url.replace(/\/$/, '') : url;
-};
-
-const allowedOrigins = [
-  normalizeUrl(process.env.FRONTEND_URL),
-  'http://localhost:3000',
-  'http://localhost:3001'
-].filter(Boolean);
-
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes(normalizeUrl(origin))) {
-      callback(null, true);
-    } else {
-      console.log('CORS rechazado para origen:', origin);
-      console.log('Orígenes permitidos:', allowedOrigins);
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+// Configurar CORS - TEMPORALMENTE PERMITIR TODOS LOS ORIGENES
+app.use(cors({
+  origin: '*',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
-};
-app.use(cors(corsOptions));
+}));
+console.log('CORS configurado: permitiendo todos los orígenes');
 app.use(express.json({ limit: '50mb' })); // Aumentar límite para logos base64 grandes
 
 // Conexión a MongoDB
