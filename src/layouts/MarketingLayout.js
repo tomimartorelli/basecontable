@@ -78,7 +78,7 @@ const MarketingLayout = ({ children, showNavbar = true }) => {
   }, [location.pathname]);
 
   return (
-    <div className={`relative min-h-screen w-full max-w-full overflow-x-hidden ${wrapperClass}`}>
+    <div className={`relative min-h-screen overflow-hidden ${wrapperClass}`}>
       {/* Aurora Background - en landing, funcionalidades y quienes-somos */}
       {showAurora && (
         <div className="fixed inset-0 z-0">
@@ -104,15 +104,15 @@ const MarketingLayout = ({ children, showNavbar = true }) => {
         </div>
       )}
       
-      <div className="relative z-10 w-full">
-        <div ref={navbarRef} className="sticky top-0 z-40 w-full" style={navbarStyle}>
+      <div className="relative z-10">
+        <div ref={navbarRef} className="fixed top-0 left-0 right-0 z-40" style={navbarStyle}>
           <Navbar />
         </div>
         <MenuMobile
           open={menuMobileOpen}
           onClose={() => setMenuMobileOpen(false)}
         />
-        <main className="w-full max-w-full relative z-30" id="main-scroll">
+        <main className="w-full overflow-y-scroll h-screen pt-16 relative z-30" id="main-scroll">
           {children}
           <Footer />
         </main>

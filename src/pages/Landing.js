@@ -313,9 +313,9 @@ const Landing = () => {
   ];
 
   return (
-    <MarketingLayout>
+    <MarketingLayout showNavbar={showNavbar}>
       {/* Hero Section */}
-      <section ref={heroRef} className={`relative overflow-hidden h-[calc(100vh-64px)] flex flex-col justify-center ${heroBg}`}>
+      <section ref={heroRef} className={`relative overflow-hidden min-h-[100svh] lg:min-h-screen flex flex-col justify-center py-12 sm:py-16 lg:py-0 ${heroBg}`}>
         <div ref={heroContentRef} className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Mobile: Contenido primero, showcase después */}
           <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-16">
@@ -405,7 +405,7 @@ const Landing = () => {
       <div className={`h-2 lg:hidden ${modoOscuro ? 'bg-gray-800' : 'bg-gray-100'}`} />
 
       {/* Stats Section */}
-      <section ref={statsRef} className={`relative h-[calc(100vh-64px)] flex items-center justify-center ${contentBg}`}>
+      <section ref={statsRef} className={`relative py-16 lg:py-0 lg:min-h-screen lg:flex lg:items-center lg:justify-center ${contentBg}`}>
         <div ref={statsContentRef} className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-16">
@@ -480,7 +480,7 @@ const Landing = () => {
       <div className={`h-2 lg:hidden ${modoOscuro ? 'bg-gray-800' : 'bg-gray-100'}`} />
 
       {/* Features Section */}
-      <section ref={featuresRef} className={`relative h-[calc(100vh-64px)] flex items-center justify-center overflow-hidden ${contentBg}`}>
+      <section ref={featuresRef} className={`relative py-16 lg:py-0 lg:min-h-screen lg:flex lg:items-center lg:justify-center overflow-hidden ${contentBg}`}>
         <div ref={featuresContentRef} className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header mejorado */}
           <div className="text-center mb-12 lg:mb-16">
@@ -544,7 +544,7 @@ const Landing = () => {
       <div className={`h-2 lg:hidden ${modoOscuro ? 'bg-gray-800' : 'bg-gray-100'}`} />
 
       {/* CTA Section */}
-      <section ref={ctaRef} className="relative h-[calc(100vh-64px)] flex items-center justify-center bg-[#004AAD]">
+      <section ref={ctaRef} className="relative py-16 lg:py-0 lg:min-h-screen lg:flex lg:items-center lg:justify-center bg-[#004AAD]">
         <div ref={ctaContentRef} className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl md:text-3xl font-semibold text-white mb-4">
             ¿Listo para transformar tu negocio?
