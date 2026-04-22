@@ -160,7 +160,18 @@ const Planes = () => {
       const container = document.getElementById('main-scroll');
       if (!container) return;
 
+      const scrollTop = container.scrollTop;
       const containerHeight = container.clientHeight;
+      
+      // Si estamos muy cerca del top, forzar sección 0
+      if (scrollTop < 100) {
+        if (activeSectionRef.current !== 0) {
+          activeSectionRef.current = 0;
+          setActiveSection(0);
+          window.__planesActiveSection = 0;
+        }
+        return;
+      }
       
       sections.forEach((ref, index) => {
         if (!ref.current) return;

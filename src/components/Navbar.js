@@ -117,8 +117,9 @@ const Navbar = () => {
         setIsQuienesSomosHero(atTop || (quienesSomosSection === 0));
       }
       if (isPlanes) {
-        // Para Planes, solo usar la sección activa, no atTop
-        setIsPlanesHero(planesSection === 0);
+        // Para Planes, usar sección activa O si estamos cerca del top
+        const planesAtTop = container.scrollTop < 100;
+        setIsPlanesHero(planesAtTop || (planesSection === 0));
       }
 
       handleScroll = () => {
@@ -139,8 +140,9 @@ const Navbar = () => {
           setIsQuienesSomosHero(atTop || (quienesSomosSection === 0));
         }
         if (isPlanes) {
-          // Para Planes, solo usar la sección activa, no atTop
-          setIsPlanesHero(planesSection === 0);
+          // Para Planes, usar sección activa O si estamos cerca del top
+          const planesAtTop = container.scrollTop < 100;
+          setIsPlanesHero(planesAtTop || (planesSection === 0));
         }
       };
 
