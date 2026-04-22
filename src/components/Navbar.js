@@ -101,48 +101,78 @@ const Navbar = () => {
       }
 
       // Verificar scroll y establecer estado inicial
-      const atTop = container.scrollTop < 50;
+      const isMobile = window.innerWidth < 1024;
+      // En mobile: transparente SOLO si está muy cerca del top (50px)
+      // En desktop: transparente si está en hero (sección 0) o cerca del top (100px)
+      const mobileTopThreshold = 50;
+      const desktopTopThreshold = 100;
+      const scrollTop = container.scrollTop;
+      
       const landingSection = window.__landingActiveSection;
       const funcionalidadesSection = window.__funcionalidadesActiveSection;
       const quienesSomosSection = window.__quienesSomosActiveSection;
       const planesSection = window.__planesActiveSection;
       
       if (isLandingPage) {
-        setIsLandingHero(atTop || (landingSection === 0));
+        const isHero = isMobile 
+          ? scrollTop < mobileTopThreshold 
+          : scrollTop < desktopTopThreshold || landingSection === 0;
+        setIsLandingHero(isHero);
       }
       if (isFuncionalidades) {
-        setIsFuncionalidadesHero(atTop || (funcionalidadesSection === 0));
+        const isHero = isMobile 
+          ? scrollTop < mobileTopThreshold 
+          : scrollTop < desktopTopThreshold || funcionalidadesSection === 0;
+        setIsFuncionalidadesHero(isHero);
       }
       if (isQuienesSomos) {
-        setIsQuienesSomosHero(atTop || (quienesSomosSection === 0));
+        const isHero = isMobile 
+          ? scrollTop < mobileTopThreshold 
+          : scrollTop < desktopTopThreshold || quienesSomosSection === 0;
+        setIsQuienesSomosHero(isHero);
       }
       if (isPlanes) {
-        // Para Planes, usar sección activa O si estamos cerca del top
-        const planesAtTop = container.scrollTop < 100;
-        setIsPlanesHero(planesAtTop || (planesSection === 0));
+        const isHero = isMobile 
+          ? scrollTop < mobileTopThreshold 
+          : scrollTop < desktopTopThreshold || planesSection === 0;
+        setIsPlanesHero(isHero);
       }
 
       handleScroll = () => {
-        // Usar scrollTop O la sección activa expuesta por cada página
-        const atTop = container.scrollTop < 50;
+        // Misma lógica que en la inicialización
+        const isMobile = window.innerWidth < 1024;
+        const mobileTopThreshold = 50;
+        const desktopTopThreshold = 100;
+        const scrollTop = container.scrollTop;
+        
         const landingSection = window.__landingActiveSection;
         const funcionalidadesSection = window.__funcionalidadesActiveSection;
         const quienesSomosSection = window.__quienesSomosActiveSection;
         const planesSection = window.__planesActiveSection;
         
         if (isLandingPage) {
-          setIsLandingHero(atTop || (landingSection === 0));
+          const isHero = isMobile 
+            ? scrollTop < mobileTopThreshold 
+            : scrollTop < desktopTopThreshold || landingSection === 0;
+          setIsLandingHero(isHero);
         }
         if (isFuncionalidades) {
-          setIsFuncionalidadesHero(atTop || (funcionalidadesSection === 0));
+          const isHero = isMobile 
+            ? scrollTop < mobileTopThreshold 
+            : scrollTop < desktopTopThreshold || funcionalidadesSection === 0;
+          setIsFuncionalidadesHero(isHero);
         }
         if (isQuienesSomos) {
-          setIsQuienesSomosHero(atTop || (quienesSomosSection === 0));
+          const isHero = isMobile 
+            ? scrollTop < mobileTopThreshold 
+            : scrollTop < desktopTopThreshold || quienesSomosSection === 0;
+          setIsQuienesSomosHero(isHero);
         }
         if (isPlanes) {
-          // Para Planes, usar sección activa O si estamos cerca del top
-          const planesAtTop = container.scrollTop < 100;
-          setIsPlanesHero(planesAtTop || (planesSection === 0));
+          const isHero = isMobile 
+            ? scrollTop < mobileTopThreshold 
+            : scrollTop < desktopTopThreshold || planesSection === 0;
+          setIsPlanesHero(isHero);
         }
       };
 
