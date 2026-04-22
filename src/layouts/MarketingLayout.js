@@ -105,7 +105,7 @@ const MarketingLayout = ({ children, showNavbar = true }) => {
       )}
       
       <div className="relative z-10 w-full">
-        <div ref={navbarRef} className="fixed top-0 left-0 right-4 z-40" style={navbarStyle}>
+        <div ref={navbarRef} className="fixed top-0 left-0 right-0 z-40" style={navbarStyle}>
           <Navbar />
         </div>
         <MenuMobile
