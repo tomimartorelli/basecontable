@@ -53,6 +53,8 @@ const Navbar = () => {
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [isFuncionalidadesHero, setIsFuncionalidadesHero] = useState(true);
   const [isQuienesSomosHero, setIsQuienesSomosHero] = useState(true);
+  const [isLandingHero, setIsLandingHero] = useState(true);
+  const [isPlanesHero, setIsPlanesHero] = useState(true);
 
   // Escuchar el evento para abrir el modal de contacto desde el menú mobile
   useEffect(() => {
@@ -70,54 +72,75 @@ const Navbar = () => {
   // Hooks de permisos
   const { canAccessDashboard } = useDashboardPermissions();
 
-  // Detectar si estamos en la landing page, funcionalidades o quienes-somos
+  // Detectar si estamos en la landing page, funcionalidades, quienes-somos o planes
   const isLandingPage = location.pathname === '/';
   const isFuncionalidades = location.pathname === '/funcionalidades';
   const isQuienesSomos = location.pathname === '/quienes-somos';
+  const isPlanes = location.pathname === '/planes';
 
-  // Efecto para detectar scroll en Funcionalidades y QuienesSomos - usar useLayoutEffect para sincronización correcta
+  // Efecto para detectar scroll en páginas marketing - usar useLayoutEffect para sincronización correcta
   useLayoutEffect(() => {
-    // Resetear estados si no estamos en estas páginas
-    if (!isFuncionalidades && !isQuienesSomos) {
+    // Resetear estados si no estamos en páginas marketing
+    if (!isFuncionalidades && !isQuienesSomos && !isLandingPage && !isPlanes) {
       setIsFuncionalidadesHero(false);
       setIsQuienesSomosHero(false);
+      setIsLandingHero(false);
+      setIsPlanesHero(false);
       return;
     }
 
     let handleScroll;
     let container;
 
-    // Delay para asegurar que los demás useLayoutEffect terminen primero
+    // Delay mínimo para asegurar que el DOM esté listo
     const timer = setTimeout(() => {
       container = document.getElementById('main-scroll');
-      if (!container) return;
+      if (!container) {
+        console.warn('Navbar: main-scroll container not found');
+        return;
+      }
 
       // Verificar scroll y establecer estado inicial
       const atTop = container.scrollTop < 50;
+      const landingSection = window.__landingActiveSection;
       const funcionalidadesSection = window.__funcionalidadesActiveSection;
       const quienesSomosSection = window.__quienesSomosActiveSection;
-      const isFuncionalidadesHero = atTop || (funcionalidadesSection === 0);
-      const isQuienesSomosHero = atTop || (quienesSomosSection === 0);
+      const planesSection = window.__planesActiveSection;
+      
+      if (isLandingPage) {
+        setIsLandingHero(atTop || (landingSection === 0));
+      }
       if (isFuncionalidades) {
-        setIsFuncionalidadesHero(isFuncionalidadesHero);
+        setIsFuncionalidadesHero(atTop || (funcionalidadesSection === 0));
       }
       if (isQuienesSomos) {
-        setIsQuienesSomosHero(isQuienesSomosHero);
+        setIsQuienesSomosHero(atTop || (quienesSomosSection === 0));
+      }
+      if (isPlanes) {
+        // Para Planes, solo usar la sección activa, no atTop
+        setIsPlanesHero(planesSection === 0);
       }
 
       handleScroll = () => {
-        // Usar scrollTop O la sección activa expuesta por Funcionalidades/QuienesSomos
+        // Usar scrollTop O la sección activa expuesta por cada página
         const atTop = container.scrollTop < 50;
+        const landingSection = window.__landingActiveSection;
         const funcionalidadesSection = window.__funcionalidadesActiveSection;
         const quienesSomosSection = window.__quienesSomosActiveSection;
-        const isFuncionalidadesHero = atTop || (funcionalidadesSection === 0);
-        const isQuienesSomosHero = atTop || (quienesSomosSection === 0);
+        const planesSection = window.__planesActiveSection;
         
+        if (isLandingPage) {
+          setIsLandingHero(atTop || (landingSection === 0));
+        }
         if (isFuncionalidades) {
-          setIsFuncionalidadesHero(isFuncionalidadesHero);
+          setIsFuncionalidadesHero(atTop || (funcionalidadesSection === 0));
         }
         if (isQuienesSomos) {
-          setIsQuienesSomosHero(isQuienesSomosHero);
+          setIsQuienesSomosHero(atTop || (quienesSomosSection === 0));
+        }
+        if (isPlanes) {
+          // Para Planes, solo usar la sección activa, no atTop
+          setIsPlanesHero(planesSection === 0);
         }
       };
 
@@ -130,25 +153,22 @@ const Navbar = () => {
         container.removeEventListener('scroll', handleScroll);
       }
     };
-  }, [isFuncionalidades, isQuienesSomos, location.pathname]);
+  }, [isFuncionalidades, isQuienesSomos, isLandingPage, isPlanes, location.pathname]);
 
   // Estilos condicionales para landing page, funcionalidades, quienes-somos y planes - transparente solo en el hero
-  // En mobile también transparente en el hero, sólida al scrollear
-  const landingSection = window.__landingActiveSection ?? 0;
-  const funcionalidadesSection = window.__funcionalidadesActiveSection ?? 0;
-  const quienesSomosSection = window.__quienesSomosActiveSection ?? 0;
-  const planesSection = window.__planesActiveSection ?? 0;
-
+  // Usar estados que se actualizan con el scroll
   const isTransparent = (
-    (isLandingPage && landingSection === 0) ||
-    (isFuncionalidades && funcionalidadesSection === 0) ||
-    (isQuienesSomos && quienesSomosSection === 0) ||
-    (location.pathname === '/planes' && planesSection === 0)
+    (isLandingPage && isLandingHero) ||
+    (isFuncionalidades && isFuncionalidadesHero) ||
+    (isQuienesSomos && isQuienesSomosHero) ||
+    (isPlanes && isPlanesHero)
   );
   
-  // En el hero de Funcionalidades o QuienesSomos, forzar modo oscuro para buen contraste
-  const forceDarkMode = (isFuncionalidades && isFuncionalidadesHero) || 
-    (isQuienesSomos && isQuienesSomosHero);
+  // En el hero de cualquier página marketing, forzar modo oscuro para buen contraste sobre Aurora
+  const forceDarkMode = (isLandingPage && isLandingHero) || 
+    (isFuncionalidades && isFuncionalidadesHero) || 
+    (isQuienesSomos && isQuienesSomosHero) ||
+    (isPlanes && isPlanesHero);
   
   // Usar modo oscuro si el usuario lo seleccionó O si estamos en el hero
   const isDarkMode = modoOscuro || forceDarkMode;
