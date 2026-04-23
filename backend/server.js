@@ -203,6 +203,7 @@ mongoose.connect(config.mongodb.uri, config.mongodb.options)
 // Rutas
 const authRoutes = require('./routes/auth');
 const googleAuthRoutes = require('./routes/googleAuth');
+const configRoutes = require('./routes/config');
 const activityRoutes = require('./routes/activity');
 const clientsRoutes = require('./routes/clients');
 const invoicesRoutes = require('./routes/invoices');
@@ -221,6 +222,7 @@ const Plan = require('./models/Plan');
 
 app.use('/api', authRoutes);
 app.use('/api', googleAuthRoutes);
+app.use('/api', configRoutes);
 app.use('/api', activityRoutes);
 app.use('/api', clientsRoutes);
 app.use('/api', invoicesRoutes);

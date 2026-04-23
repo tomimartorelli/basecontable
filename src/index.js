@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
-import { GoogleOAuthProvider } from '@react-oauth/google';
+import AsyncGoogleOAuthProvider from './components/AsyncGoogleOAuthProvider';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
@@ -59,17 +59,16 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID || '';
 
 root.render(
   <React.StrictMode>
-    <GoogleOAuthProvider clientId={googleClientId}>
+    <AsyncGoogleOAuthProvider>
       <AuthProvider>
         <ThemeProvider>
           <App />
         </ThemeProvider>
       </AuthProvider>
-    </GoogleOAuthProvider>
+    </AsyncGoogleOAuthProvider>
   </React.StrictMode>
 );
 
