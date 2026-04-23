@@ -123,6 +123,41 @@ const checkPlanLimits = (limitType) => {
           }
           break;
 
+        case 'clients':
+          // Contar clientes existentes del usuario
+          const clientsCount = await require('../models/Client').countDocuments({ user: req.user._id });
+          if (plan.maxClients > 0 && clientsCount >= plan.maxClients) {
+            return res.status(403).json({ 
+              message: `Has alcanzado el límite de clientes para tu plan (${plan.maxClients})`,
+              currentCount: clientsCount,
+              limit: plan.maxClients,
+              upgradeRequired: true
+            });
+          }
+          break;
+
+        case 'documents':
+          // Contar documentos del mes actual
+          const now = new Date();
+          const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+          const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+          
+          const documentsCount = await require('../models/Invoice').countDocuments({
+            user: req.user._id,
+            createdAt: { $gte: startOfMonth, $lte: endOfMonth }
+          });
+          
+          if (plan.maxDocumentsPerMonth > 0 && documentsCount >= plan.maxDocumentsPerMonth) {
+            return res.status(403).json({ 
+              message: `Has alcanzado el límite de registros mensuales para tu plan (${plan.maxDocumentsPerMonth})`,
+              currentCount: documentsCount,
+              limit: plan.maxDocumentsPerMonth,
+              upgradeRequired: true,
+              resetDate: endOfMonth
+            });
+          }
+          break;
+
         default:
           break;
       }

@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Invoice = require('../models/Invoice');
 const auth = require('../middleware/auth');
+const { checkPlanLimits } = require('../middleware/featureCheck');
 const PDFDocument = require('pdfkit');
 const path = require('path');
 const fs = require('fs');
@@ -124,7 +125,7 @@ router.get('/invoices', auth, async (req, res) => {
 });
 
 // Crear factura
-router.post('/invoices', auth, async (req, res) => {
+router.post('/invoices', auth, checkPlanLimits('documents'), async (req, res) => {
   try {
     // Elimina el _id si viene en el body
     if (req.body._id) delete req.body._id;

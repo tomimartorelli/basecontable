@@ -4,6 +4,7 @@ const User = require('../models/User');
 const Company = require('../models/Company');
 const Invoice = require('../models/Invoice');
 const auth = require('../middleware/auth');
+const { checkPlanLimits } = require('../middleware/featureCheck');
 
 const router = express.Router();
 
@@ -124,7 +125,7 @@ router.get('/clients', auth, async (req, res) => {
 });
 
 // Crear cliente
-router.post('/clients', auth, async (req, res) => {
+router.post('/clients', auth, checkPlanLimits('clients'), async (req, res) => {
   try {
     const { razonSocial, domicilio, pais, localidad, email, telefono } = req.body;
     if (!razonSocial || !pais || !email) {
