@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useCompanyData } from '../hooks/useCompanyData';
 import { useApi } from '../hooks/useApi';
 import { ThemeContext } from '../context/ThemeContext';
-import { sanitizeText, sanitizeEmail, sanitizeNumber } from '../utils/sanitize';
+import { sanitizeText, sanitizeEmail } from '../utils/sanitize';
 
 const FacturaForm = ({ onAdd, initialData = null, editMode = false, onCancel, modoOscuro: modoOscuroProp }) => {
   const { modoOscuro: contextoOscuro } = useContext(ThemeContext);
@@ -222,7 +222,7 @@ const FacturaForm = ({ onAdd, initialData = null, editMode = false, onCancel, mo
       case 'numero':
       case 'cantidad':
         // Solo números y letras permitidos
-        sanitizedValue = value.replace(/[^a-zA-Z0-9\-]/g, '');
+        sanitizedValue = value.replace(/[^a-zA-Z0-9-]/g, '');
         break;
       case 'notas':
         sanitizedValue = sanitizeText(value);

@@ -5,7 +5,7 @@ import {
 } from 'react-icons/fi';
 import { ThemeContext } from '../context/ThemeContext';
 import { API_BASE_URL } from '../config';
-import { sanitizeText, sanitizeEmail, sanitizeNumber, validators } from '../utils/sanitize';
+import { sanitizeText, sanitizeEmail, validators } from '../utils/sanitize';
 
 const Register = () => {
   const { modoOscuro } = useContext(ThemeContext);
