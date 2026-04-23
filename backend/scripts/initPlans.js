@@ -6,7 +6,7 @@ const plans = [
   {
     name: 'Básico',
     slug: 'basico',
-    price: 0,
+    price: 5,
     currency: 'USD',
     billingCycle: 'monthly',
     features: {
@@ -18,62 +18,89 @@ const plans = [
       employeeAccounts: false,
       multiCompany: false,
       advancedAnalytics: false,
-      prioritySupport: false
+      prioritySupport: false,
+      multimoneda: false,
+      presupuestos: false,
+      flujoDeCaja: false,
+      reportesAutomatizados: false
     },
     maxEmployees: 1,
     maxCompanies: 1,
     maxTemplates: 1,
+    maxClients: 20,
+    maxDocumentsPerMonth: 50,
+    maxStorageMB: 100,
+    dataHistoryMonths: 6,
+    hasTrial: true,
     isActive: true,
     isPopular: false,
-    description: 'Plan gratuito para registro de ventas básico'
+    description: 'Para emprendedores y negocios que operan solo en pesos argentinos. Primeros 30 días gratis.'
   },
   {
     name: 'Profesional',
     slug: 'profesional',
-    price: 29,
+    price: 10,
     currency: 'USD',
     billingCycle: 'monthly',
     features: {
       basicInvoicing: true,
       basicTemplates: true,
       customTemplates: true,
-      logoUpload: true,
+      logoUpload: false,
       companyBranding: true,
       employeeAccounts: false,
       multiCompany: false,
-      advancedAnalytics: false,
-      prioritySupport: false
+      advancedAnalytics: true,
+      prioritySupport: false,
+      multimoneda: true,
+      presupuestos: false,
+      flujoDeCaja: true,
+      reportesAutomatizados: true
     },
-    maxEmployees: 1,
+    maxEmployees: 2,
     maxCompanies: 1,
     maxTemplates: 5,
+    maxClients: 100,
+    maxDocumentsPerMonth: 300,
+    maxStorageMB: 500,
+    dataHistoryMonths: 24,
+    hasTrial: false,
     isActive: true,
     isPopular: true,
-    description: 'Plan ideal para profesionales independientes'
+    description: 'Para negocios con movimiento en pesos y dólares. Multimoneda + reportes + flujo de caja proyectado.'
   },
   {
     name: 'Empresarial',
     slug: 'empresarial',
-    price: 79,
+    price: 20,
     currency: 'USD',
     billingCycle: 'monthly',
     features: {
       basicInvoicing: true,
       basicTemplates: true,
       customTemplates: true,
-      logoUpload: true,
+      logoUpload: false,
       companyBranding: true,
       employeeAccounts: true,
       multiCompany: true,
       advancedAnalytics: true,
-      prioritySupport: true
+      prioritySupport: true,
+      multimoneda: true,
+      presupuestos: true,
+      flujoDeCaja: true,
+      reportesAutomatizados: true
     },
     maxEmployees: 10,
-    maxCompanies: 3,
+    maxCompanies: 5,
     maxTemplates: 20,
+    maxClients: 0,
+    maxDocumentsPerMonth: 0,
+    maxStorageMB: 5120,
+    dataHistoryMonths: 0,
+    hasTrial: false,
     isActive: true,
     isPopular: false,
-    description: 'Plan completo para empresas con múltiples empleados'
+    description: 'Para estudios contables y negocios con equipo. Multi-usuario, auditoría, presupuestos con alertas.'
   },
 ];
 

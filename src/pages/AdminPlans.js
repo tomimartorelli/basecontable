@@ -144,10 +144,16 @@ const AdminPlans = () => {
           maxEmployees: 1,
           maxCompanies: 1,
           maxTemplates: 1,
+          maxClients: 50,
+          maxDocumentsPerMonth: 200,
+          maxStorageMB: 100,
+          dataHistoryMonths: 6,
+          hasTrial: false,
           isActive: true,
           isPopular: false,
           description: ''
         });
+        setSelectedPlan(null);
         loadPlans();
       } else {
         throw new Error('Error al crear plan');
@@ -190,11 +196,20 @@ const AdminPlans = () => {
             employeeAccounts: false,
             multiCompany: false,
             advancedAnalytics: false,
-            prioritySupport: false
+            prioritySupport: false,
+            multimoneda: false,
+            presupuestos: false,
+            flujoDeCaja: false,
+            reportesAutomatizados: false
           },
           maxEmployees: 1,
           maxCompanies: 1,
           maxTemplates: 1,
+          maxClients: 50,
+          maxDocumentsPerMonth: 200,
+          maxStorageMB: 100,
+          dataHistoryMonths: 6,
+          hasTrial: false,
           isActive: true,
           isPopular: false,
           description: ''
@@ -258,6 +273,11 @@ const AdminPlans = () => {
       maxEmployees: plan.maxEmployees,
       maxCompanies: plan.maxCompanies,
       maxTemplates: plan.maxTemplates,
+      maxClients: plan.maxClients || 50,
+      maxDocumentsPerMonth: plan.maxDocumentsPerMonth || 200,
+      maxStorageMB: plan.maxStorageMB || 100,
+      dataHistoryMonths: plan.dataHistoryMonths || 6,
+      hasTrial: plan.hasTrial || false,
       isActive: plan.isActive,
       isPopular: plan.isPopular,
       description: plan.description

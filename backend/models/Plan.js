@@ -64,6 +64,22 @@ const planSchema = new mongoose.Schema({
     prioritySupport: {
       type: Boolean,
       default: false
+    },
+    multimoneda: {
+      type: Boolean,
+      default: false
+    },
+    presupuestos: {
+      type: Boolean,
+      default: false
+    },
+    flujoDeCaja: {
+      type: Boolean,
+      default: false
+    },
+    reportesAutomatizados: {
+      type: Boolean,
+      default: false
     }
   },
   // Permisos específicos del dashboard
@@ -150,6 +166,22 @@ const planSchema = new mongoose.Schema({
   maxDocumentsPerMonth: {
     type: Number,
     default: 200
+  },
+  maxClients: {
+    type: Number,
+    default: 50
+  },
+  maxStorageMB: {
+    type: Number,
+    default: 100
+  },
+  dataHistoryMonths: {
+    type: Number,
+    default: 6
+  },
+  hasTrial: {
+    type: Boolean,
+    default: false
   },
   isActive: {
     type: Boolean,

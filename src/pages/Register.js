@@ -84,12 +84,15 @@ const Register = () => {
       basicInvoicing: 'Registro de ventas básico',
       basicTemplates: 'Plantillas básicas',
       customTemplates: 'Plantillas personalizadas',
-      logoUpload: 'Subida de logo',
       companyBranding: 'Marca de empresa',
       employeeAccounts: 'Cuentas de empleados',
       multiCompany: 'Múltiples empresas',
       advancedAnalytics: 'Analíticas avanzadas',
-      prioritySupport: 'Soporte prioritario'
+      prioritySupport: 'Soporte prioritario',
+      multimoneda: 'Multimoneda (ARS + USD + EUR)',
+      presupuestos: 'Presupuestos y alertas',
+      flujoDeCaja: 'Flujo de caja proyectado',
+      reportesAutomatizados: 'Reportes automáticos'
     };
     return featureNames[feature] || feature;
   };

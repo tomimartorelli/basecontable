@@ -267,12 +267,15 @@ const Planes = () => {
       basicInvoicing: 'Registro de ventas básico',
       basicTemplates: 'Plantillas de registro',
       customTemplates: 'Diseño personalizado de registros',
-      logoUpload: 'Logo en exportaciones PDF',
       companyBranding: 'Marca de tu negocio',
       employeeAccounts: 'Múltiples usuarios',
       multiCompany: 'Multi-empresa',
       advancedAnalytics: 'Reportes y analíticas avanzadas',
       prioritySupport: 'Soporte prioritario',
+      multimoneda: 'Multimoneda (ARS + USD + EUR)',
+      presupuestos: 'Presupuestos y alertas de metas',
+      flujoDeCaja: 'Flujo de caja proyectado',
+      reportesAutomatizados: 'Reportes automáticos mensuales',
     };
     return featureNames[feature] || feature;
   };
@@ -300,13 +303,13 @@ const Planes = () => {
   const getPlanTagline = (plan) => {
     const slug = (plan.slug || '').toLowerCase();
     if (slug === 'basico') {
-      return 'Para emprendedores y negocios muy chicos que recién empiezan a ordenar sus ventas y cobranzas fuera de Excel.';
+      return 'Para emprendedores que operan en pesos argentinos. Primeros 30 días GRATIS para probar.';
     }
     if (slug === 'profesional') {
-      return 'Para quienes ya tienen movimiento mensual y necesitan sumar gastos y reportes simples de flujo de caja.';
+      return 'Para negocios con movimiento en pesos y dólares. Multimoneda + reportes + flujo de caja proyectado.';
     }
     if (slug === 'empresarial') {
-      return 'Para negocios que trabajan en equipo y necesitan varios usuarios, auditoría y más volumen de registros.';
+      return 'Para estudios contables y negocios con equipo. Multi-usuario + auditoría + presupuestos con alertas.';
     }
     return plan.description || '';
   };
@@ -315,23 +318,23 @@ const Planes = () => {
     const slug = (plan.slug || '').toLowerCase();
     if (slug === 'basico') {
       return [
-        'Registro simple de ventas y cobranzas',
-        'Pensado para un solo usuario y un solo negocio',
-        'Ideal si hoy llevás todo en cuadernos o Excel'
+        'Registro simple de ventas y gastos en ARS',
+        'Hasta 20 clientes y 50 registros por mes',
+        'Primeros 30 días GRATIS, sin tarjeta de crédito'
       ];
     }
     if (slug === 'profesional') {
       return [
-        'Suma registro de gastos y reportes básicos',
-        'Incluye flujo de caja por período',
-        'Exportación CSV lista para tu contador'
+        'Multimoneda: operá en ARS + USD + EUR',
+        'Flujo de caja proyectado 3 meses',
+        'Reportes automáticos mensuales'
       ];
     }
     if (slug === 'empresarial') {
       return [
-        'Varios usuarios con acceso a la misma cuenta',
-        'Auditoría básica de acciones por usuario',
-        'Recomendado para estudios y negocios con equipo'
+        'Multi-usuario: hasta 10 usuarios + auditoría',
+        'Presupuestos por categoría con alertas',
+        'Multi-empresa: gestioná hasta 5 negocios'
       ];
     }
     return [];
