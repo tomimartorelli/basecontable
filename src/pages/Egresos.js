@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, useCallback, useMemo } from 're
 import { AuthContext } from '../context/AuthContext';
 import { ThemeContext } from '../context/ThemeContext';
 import { useApi } from '../hooks/useApi';
+import { sanitizeText, sanitizeNumber } from '../utils/sanitize';
 
 const CATEGORIAS = ['', 'Insumos', 'Alquiler', 'Servicios', 'Impuestos', 'Sueldos', 'Otro'];
 
@@ -87,7 +88,19 @@ const Egresos = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: name === 'monto' ? parseFloat(value) || 0 : value }));
+    
+    // Sanitizar según el tipo de campo
+    let sanitizedValue = value;
+    if (name === 'monto') {
+      sanitizedValue = parseFloat(value) || 0;
+      // Limitar a 2 decimales y valores razonables
+      if (sanitizedValue < 0) sanitizedValue = 0;
+      if (sanitizedValue > 999999999) sanitizedValue = 999999999;
+    } else if (name === 'concepto' || name === 'proveedor' || name === 'notas') {
+      sanitizedValue = sanitizeText(value);
+    }
+    
+    setForm(prev => ({ ...prev, [name]: sanitizedValue }));
     setError('');
     setSuccess('');
   };
@@ -102,12 +115,23 @@ const Egresos = () => {
     setError('');
     setSuccess('');
     try {
+      // Sanitizar todos los datos antes de enviar
+      const sanitizedData = {
+        fecha: form.fecha,
+        concepto: sanitizeText(form.concepto),
+        monto: sanitizeNumber(form.monto),
+        moneda: form.moneda === 'USD' ? 'USD' : 'ARS', // Solo valores permitidos
+        categoria: CATEGORIAS.includes(form.categoria) ? form.categoria : '',
+        proveedor: sanitizeText(form.proveedor),
+        notas: sanitizeText(form.notas)
+      };
+      
       const url = editId ? `/api/expenses/${editId}` : '/api/expenses';
       const method = editId ? 'PUT' : 'POST';
       const res = await secureFetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form)
+        body: JSON.stringify(sanitizedData)
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Error al guardar');
@@ -117,7 +141,7 @@ const Egresos = () => {
       fetchEgresos();
       setTimeout(() => setTab('listado'), 800);
     } catch (err) {
-      setError(err.message || 'Error de conexión');
+      setError(sanitizeText(err.message) || 'Error de conexión');
     } finally {
       setLoading(false);
     }
@@ -220,14 +244,14 @@ const Egresos = () => {
           <div
             className={`mb-4 p-3 rounded-xl border-l-4 ${modoOscuro ? 'bg-green-900/30 border-green-500' : 'bg-green-50 border-green-400'}`}
           >
-            <span className={modoOscuro ? 'text-green-200' : 'text-green-800'}>{success}</span>
+            <span className={modoOscuro ? 'text-green-200' : 'text-green-800'}>{sanitizeText(success)}</span>
           </div>
         )}
         {error && (
           <div
             className={`mb-4 p-3 rounded-xl border-l-4 ${modoOscuro ? 'bg-red-900/30 border-red-500' : 'bg-red-50 border-red-400'}`}
           >
-            <span className={modoOscuro ? 'text-red-200' : 'text-red-800'}>{error}</span>
+            <span className={modoOscuro ? 'text-red-200' : 'text-red-800'}>{sanitizeText(error)}</span>
           </div>
         )}
 

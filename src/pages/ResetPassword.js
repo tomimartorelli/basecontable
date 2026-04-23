@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { ThemeContext } from '../context/ThemeContext';
 import { API_BASE_URL } from '../config';
 import { FiLock, FiEye, FiEyeOff, FiArrowLeft } from 'react-icons/fi';
+import { sanitizeEmail, sanitizeText, validators } from '../utils/sanitize';
 
 const ResetPassword = () => {
   const { modoOscuro } = useContext(ThemeContext);
@@ -18,7 +19,9 @@ const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
 
   const token = searchParams.get('token') || '';
-  const email = searchParams.get('email') || '';
+  const rawEmail = searchParams.get('email') || '';
+  // Sanitizar email desde URL params
+  const email = sanitizeEmail(rawEmail);
 
   useEffect(() => {
     if (!token || !email) {
@@ -43,16 +46,16 @@ const ResetPassword = () => {
       setError('El enlace para restablecer la contraseña no es válido. Volvé a pedir uno nuevo.');
       return;
     }
-    if (!password || !repeatPassword) {
-      setError('Completá ambos campos de contraseña.');
+    
+    // Validar contraseña con el validador seguro
+    const passwordValidation = validators.password(password);
+    if (!passwordValidation.valid) {
+      setError(passwordValidation.error);
       return;
     }
+    
     if (password !== repeatPassword) {
       setError('Las contraseñas no coinciden.');
-      return;
-    }
-    if (password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres.');
       return;
     }
 
@@ -74,7 +77,7 @@ const ResetPassword = () => {
       );
       setTimeout(() => navigate('/login'), 2500);
     } catch (err) {
-      setError(err.message || 'Error de conexión. Verificá tu conexión a internet.');
+      setError(sanitizeText(err.message) || 'Error de conexión. Verificá tu conexión a internet.');
     } finally {
       setLoading(false);
     }
@@ -114,7 +117,7 @@ const ResetPassword = () => {
                   : 'border-red-200 bg-red-50 text-red-800'
               }`}
             >
-              {error}
+              {sanitizeText(error)}
             </div>
           )}
           {success && (
@@ -125,7 +128,7 @@ const ResetPassword = () => {
                   : 'border-green-200 bg-green-50 text-green-800'
               }`}
             >
-              {success}
+              {sanitizeText(success)}
             </div>
           )}
 

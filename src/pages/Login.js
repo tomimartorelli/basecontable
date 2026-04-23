@@ -5,6 +5,7 @@ import { API_BASE_URL } from '../config';
 import { useNavigate, Link } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiTrendingUp, FiPieChart, FiDollarSign, FiBarChart2 } from 'react-icons/fi';
+import { sanitizeEmail, sanitizeText, validators } from '../utils/sanitize';
 
 const Login = () => {
   const { login } = useContext(AuthContext);
@@ -26,11 +27,34 @@ const Login = () => {
     e.preventDefault();
     setError('');
     setLoading(true);
+    
     try {
+      // Sanitizar inputs
+      const sanitizedEmail = sanitizeEmail(email);
+      const sanitizedPassword = sanitizeText(password);
+      
+      // Validar email
+      const emailValidation = validators.email(sanitizedEmail);
+      if (!emailValidation.valid) {
+        setError(emailValidation.error);
+        setLoading(false);
+        return;
+      }
+      
+      // Validar que password no esté vacío
+      if (!sanitizedPassword) {
+        setError('La contraseña es requerida');
+        setLoading(false);
+        return;
+      }
+      
       const res = await fetch(`${API_BASE_URL}/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ 
+          email: sanitizedEmail, 
+          password: sanitizedPassword 
+        })
       });
 
       const contentType = res.headers.get('content-type') || '';
@@ -229,7 +253,7 @@ const Login = () => {
             {/* Mensaje de error */}
             {error && (
               <div className={`border rounded-lg py-2 px-3 text-xs ${modoOscuro ? 'border-red-700 bg-red-900/30 text-red-200' : 'border-gray-200 bg-gray-50 text-gray-800'}`}>
-                {error}
+                {sanitizeText(error)}
               </div>
             )}
 

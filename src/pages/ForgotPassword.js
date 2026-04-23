@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ThemeContext } from '../context/ThemeContext';
 import { API_BASE_URL } from '../config';
 import { FiMail, FiArrowLeft, FiArrowRight } from 'react-icons/fi';
+import { sanitizeEmail, sanitizeText, validators } from '../utils/sanitize';
 
 const ForgotPassword = () => {
   const { modoOscuro } = useContext(ThemeContext);
@@ -24,11 +25,23 @@ const ForgotPassword = () => {
     setError('');
     setSuccess('');
     setLoading(true);
+    
     try {
+      // Sanitizar email
+      const sanitizedEmail = sanitizeEmail(email);
+      
+      // Validar email
+      const emailValidation = validators.email(sanitizedEmail);
+      if (!emailValidation.valid) {
+        setError(emailValidation.error);
+        setLoading(false);
+        return;
+      }
+      
       const res = await fetch(`${API_BASE_URL}/api/forgot-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ email: sanitizedEmail })
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
@@ -39,7 +52,7 @@ const ForgotPassword = () => {
           'Si el email está registrado, te enviamos un enlace para elegir una nueva contraseña.'
       );
     } catch (err) {
-      setError(err.message || 'Error de conexión. Verificá tu conexión a internet.');
+      setError(sanitizeText(err.message) || 'Error de conexión. Verificá tu conexión a internet.');
     } finally {
       setLoading(false);
     }
@@ -79,7 +92,7 @@ const ForgotPassword = () => {
                   : 'border-red-200 bg-red-50 text-red-800'
               }`}
             >
-              {error}
+              {sanitizeText(error)}
             </div>
           )}
           {success && (
@@ -90,7 +103,7 @@ const ForgotPassword = () => {
                   : 'border-green-200 bg-green-50 text-green-800'
               }`}
             >
-              {success}
+              {sanitizeText(success)}
             </div>
           )}
 

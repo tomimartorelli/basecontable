@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const config = require('./config');
+const { sanitizeMiddleware } = require('./middleware/sanitize');
 
 const app = express();
 
@@ -16,6 +17,10 @@ app.use(cors({
 }));
 console.log('CORS configurado: permitiendo todos los orígenes');
 app.use(express.json({ limit: '50mb' })); // Aumentar límite para logos base64 grandes
+
+// Sanitización de inputs - protección contra XSS e inyección NoSQL
+app.use(sanitizeMiddleware);
+console.log('✅ Middleware de sanitización activado');
 
 // Conexión a MongoDB
 mongoose.connect(config.mongodb.uri, config.mongodb.options)

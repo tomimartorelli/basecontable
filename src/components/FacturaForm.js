@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useCompanyData } from '../hooks/useCompanyData';
 import { useApi } from '../hooks/useApi';
 import { ThemeContext } from '../context/ThemeContext';
+import { sanitizeText, sanitizeEmail, sanitizeNumber } from '../utils/sanitize';
 
 const FacturaForm = ({ onAdd, initialData = null, editMode = false, onCancel, modoOscuro: modoOscuroProp }) => {
   const { modoOscuro: contextoOscuro } = useContext(ThemeContext);
@@ -212,7 +213,28 @@ const FacturaForm = ({ onAdd, initialData = null, editMode = false, onCancel, mo
 
   // Función para manejar cambios en la factura
   const handleChange = (field, value) => {
-    setFactura(prev => ({ ...prev, [field]: value }));
+    // Sanitizar según el tipo de campo
+    let sanitizedValue = value;
+    switch (field) {
+      case 'email':
+        sanitizedValue = sanitizeEmail(value);
+        break;
+      case 'numero':
+      case 'cantidad':
+        // Solo números y letras permitidos
+        sanitizedValue = value.replace(/[^a-zA-Z0-9\-]/g, '');
+        break;
+      case 'notas':
+        sanitizedValue = sanitizeText(value);
+        break;
+      default:
+        // Campos de texto general
+        if (typeof value === 'string') {
+          sanitizedValue = sanitizeText(value);
+        }
+    }
+    
+    setFactura(prev => ({ ...prev, [field]: sanitizedValue }));
   };
 
   const [error, setError] = useState('');
@@ -238,15 +260,22 @@ const FacturaForm = ({ onAdd, initialData = null, editMode = false, onCancel, mo
     // Calcular total de la factura desde el array de conceptos
     const total = factura.conceptos.reduce((sum, c) => sum + (c.cantidad * c.precioUnitario), 0);
     
-    // Crear factura completa con todos los campos requeridos
+    // Sanitizar y crear factura completa con todos los campos requeridos
     const facturaCompleta = {
       ...factura,
+      numero: sanitizeText(factura.numero),
+      cliente: sanitizeText(factura.cliente),
+      email: sanitizeEmail(factura.email),
+      pais: sanitizeText(factura.pais),
+      razonSocial: sanitizeText(factura.razonSocial),
+      notas: sanitizeText(factura.notas),
+      categoria: sanitizeText(factura.categoria),
       total: total,
       tipo: factura.tipo || 'A',
       
       // Convertir conceptos al formato que espera el backend
       conceptos: factura.conceptos.map(c => ({
-        detalle: c.descripcion,
+        detalle: sanitizeText(c.descripcion),
         importe: c.cantidad * c.precioUnitario
       }))
     };
@@ -289,7 +318,7 @@ const FacturaForm = ({ onAdd, initialData = null, editMode = false, onCancel, mo
 
       {error && (
         <div className={`mb-3 px-3 py-2 rounded-lg text-xs border ${modoOscuro ? 'bg-red-900/30 border-red-700 text-red-200' : 'bg-red-50 border-red-200 text-red-800'}`}>
-          {error}
+          {sanitizeText(error)}
         </div>
       )}
 

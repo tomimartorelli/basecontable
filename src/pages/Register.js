@@ -5,6 +5,7 @@ import {
 } from 'react-icons/fi';
 import { ThemeContext } from '../context/ThemeContext';
 import { API_BASE_URL } from '../config';
+import { sanitizeText, sanitizeEmail, sanitizeNumber, validators } from '../utils/sanitize';
 
 const Register = () => {
   const { modoOscuro } = useContext(ThemeContext);
@@ -94,20 +95,35 @@ const Register = () => {
   };
 
   const validateStep1 = () => {
-    if (!name.trim()) return 'El nombre es requerido';
-    if (!email.trim()) return 'El email es requerido';
+    // Sanitizar inputs antes de validar
+    const sanitizedName = sanitizeText(name);
+    const sanitizedEmail = sanitizeEmail(email);
+    
+    if (!sanitizedName.trim()) return 'El nombre es requerido';
+    
+    if (!sanitizedEmail) return 'El email es requerido';
+    const emailValidation = validators.email(sanitizedEmail);
+    if (!emailValidation.valid) return emailValidation.error;
+    
     if (!password) return 'La contraseña es requerida';
+    const passwordValidation = validators.password(password);
+    if (!passwordValidation.valid) return passwordValidation.error;
+    
     if (password !== repeatPassword) return 'Las contraseñas no coinciden';
-    if (password.length < 6) return 'La contraseña debe tener al menos 6 caracteres';
     return null;
   };
 
   const validateStep2 = () => {
     if (userType === 'company') {
-      if (!companyName.trim()) return 'El nombre de la empresa es requerido';
-      if (!legalName.trim()) return 'La razón social es requerida';
-      if (!cuit.trim()) return 'El CUIT es requerido';
-      if (cuit.length < 10) return 'El CUIT debe tener al menos 10 caracteres';
+      // Sanitizar inputs
+      const sanitizedCompanyName = sanitizeText(companyName);
+      const sanitizedLegalName = sanitizeText(legalName);
+      const sanitizedCuit = sanitizeText(cuit);
+      
+      if (!sanitizedCompanyName.trim()) return 'El nombre de la empresa es requerido';
+      if (!sanitizedLegalName.trim()) return 'La razón social es requerida';
+      if (!sanitizedCuit.trim()) return 'El CUIT es requerido';
+      if (sanitizedCuit.length < 10) return 'El CUIT debe tener al menos 10 caracteres';
     }
     return null;
   };
@@ -148,27 +164,28 @@ const Register = () => {
       console.log('Plan seleccionado:', selectedPlan);
       console.log('Plan ID:', selectedPlan._id);
       
-      const userData = {
-        name,
-        email,
-        password,
-        userType,
+      // Sanitizar todos los datos antes de enviar
+      const sanitizedUserData = {
+        name: sanitizeText(name),
+        email: sanitizeEmail(email),
+        password: password, // No sanitizar password para no modificarla
+        userType: userType === 'company' ? 'company' : 'individual', // Solo valores permitidos
         selectedPlan: selectedPlan._id
       };
       
-      console.log('Datos enviados:', userData);
+      console.log('Datos enviados:', sanitizedUserData);
 
       if (userType === 'company') {
-        userData.company = {
-          name: companyName,
-          legalName,
-          taxId: cuit,
-          phone,
+        sanitizedUserData.company = {
+          name: sanitizeText(companyName),
+          legalName: sanitizeText(legalName),
+          taxId: sanitizeText(cuit),
+          phone: sanitizeText(phone),
           address: {
-            street: address,
-            city,
-            state,
-            postalCode,
+            street: sanitizeText(address),
+            city: sanitizeText(city),
+            state: sanitizeText(state),
+            postalCode: sanitizeText(postalCode),
             country: 'Argentina'
           }
         };
@@ -177,7 +194,7 @@ const Register = () => {
       const res = await fetch(`${API_BASE_URL}/api/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData)
+        body: JSON.stringify(sanitizedUserData)
       });
 
       const data = await res.json();
@@ -186,7 +203,7 @@ const Register = () => {
       setSuccess('Usuario registrado correctamente. Ahora puedes iniciar sesión.');
       setTimeout(() => navigate('/login'), 2000);
     } catch (err) {
-      setError(err.message);
+      setError(sanitizeText(err.message));
     } finally {
       setLoading(false);
     }

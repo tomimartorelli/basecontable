@@ -3,6 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import { ThemeContext } from "../context/ThemeContext";
 import { useApi } from '../hooks/useApi';
 import SkeletonLoader from '../components/SkeletonLoader';
+import { sanitizeText, sanitizeEmail, validators } from '../utils/sanitize';
 
 const camposIniciales = {
   razonSocial: "",
@@ -85,7 +86,21 @@ const Clientes = () => {
   };
 
   const handleChange = e => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    
+    // Sanitizar según el tipo de campo
+    let sanitizedValue = value;
+    if (name === 'email') {
+      sanitizedValue = sanitizeEmail(value);
+    } else if (name === 'telefono') {
+      // Solo números, espacios, paréntesis, guiones y +
+      sanitizedValue = value.replace(/[^0-9\s()\-+]/g, '');
+    } else {
+      // Campos de texto general
+      sanitizedValue = sanitizeText(value);
+    }
+    
+    setForm({ ...form, [name]: sanitizedValue });
     setError("");
     setSuccess("");
   };
@@ -126,15 +141,36 @@ const Clientes = () => {
   // Crear o editar cliente
   const handleSubmit = async e => {
     e.preventDefault();
+    
+    // Validar campos requeridos
     if (!form.razonSocial.trim() || !form.pais.trim() || !form.email.trim()) {
       setError("Los campos Razón social, País y Email son obligatorios.");
       return;
     }
+    
+    // Validar email
+    const emailValidation = validators.email(form.email);
+    if (!emailValidation.valid) {
+      setError(emailValidation.error);
+      return;
+    }
+    
     setLoading(true);
     setError("");
     setSuccess("");
     setOfflineMsg("");
+    
     try {
+      // Sanitizar todos los datos antes de enviar
+      const sanitizedData = {
+        razonSocial: sanitizeText(form.razonSocial),
+        domicilio: sanitizeText(form.domicilio),
+        pais: sanitizeText(form.pais),
+        localidad: sanitizeText(form.localidad),
+        email: sanitizeEmail(form.email),
+        telefono: form.telefono.replace(/[^0-9\s()\-+]/g, '')
+      };
+      
       let res, data;
       if (editId) {
         // Editar
@@ -144,7 +180,7 @@ const Clientes = () => {
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify(form),
+          body: JSON.stringify(sanitizedData),
         });
         data = await res.json();
         if (!res.ok) throw new Error(data.message || "Error al editar cliente");
@@ -152,7 +188,7 @@ const Clientes = () => {
         if (data.offline) setOfflineMsg(data.message || "La acción se guardó offline y se sincronizará cuando vuelvas a tener internet.");
         registrarActividad(
           'Editar cliente',
-          `Cliente ${clienteAntes?.razonSocial} editado\n${obtenerCambiosCliente(clienteAntes, form)}`
+          `Cliente ${clienteAntes?.razonSocial} editado\n${obtenerCambiosCliente(clienteAntes, sanitizedData)}`
         );
       } else {
         // Crear
@@ -161,7 +197,7 @@ const Clientes = () => {
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify(form),
+          body: JSON.stringify(sanitizedData),
         });
         data = await res.json();
         if (!res.ok) throw new Error(data.message || "Error al agregar cliente");
@@ -169,14 +205,14 @@ const Clientes = () => {
         if (data.offline) setOfflineMsg(data.message || "La acción se guardó offline y se sincronizará cuando vuelvas a tener internet.");
         registrarActividad(
           'Crear cliente',
-          `Cliente ${form.razonSocial} creado\n• Email: ${form.email}\n• País: ${form.pais}`
+          `Cliente ${sanitizedData.razonSocial} creado\n• Email: ${sanitizedData.email}\n• País: ${sanitizedData.pais}`
         );
       }
       setForm(camposIniciales);
       setEditId(null);
       fetchClientes();
     } catch (err) {
-      setError(err.message || "Error de conexión");
+      setError(sanitizeText(err.message) || "Error de conexión");
     } finally {
       setLoading(false);
     }
